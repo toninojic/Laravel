@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ListingController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
+/* use App\Http\Controllers\ListingContoller; */
 
 /*
 |--------------------------------------------------------------------------
@@ -14,17 +16,20 @@ use App\Models\Listing;
 |
 */
 
-Route::get('/', function () {
-    return view('listings' , [
-        'heading' => 'Latest Listings',
-        'listings' => Listing::all()
-    ]);
-});
 
 
-Route::get('/listings/{listing}', function(Listing $listing) {
-    return view('listing', [
-        'listing' => $listing
-    ]);
-});
+// All listing
+Route::get('/', [ListingController::class, 'index']);
+
+
+// Show Crate Form
+Route::get('/listing/create', [ListingController::class, 'create']);
+
+// Store listing data
+Route::post('/listing/create/listings', [ListingController::class, 'store']);
+
+
+// Single listing
+Route::get('/listings/{listing}', [ListingController::class, 'show']);
+
 
